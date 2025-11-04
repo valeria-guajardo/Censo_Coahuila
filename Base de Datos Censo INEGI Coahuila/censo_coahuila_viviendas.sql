@@ -19,24 +19,24 @@
 -- Table structure for table `viviendas`
 --
 
-DROP TABLE IF EXISTS `viviendas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `viviendas` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `direccion` varchar(255) DEFAULT NULL,
-  `tipo_id` int DEFAULT NULL,
-  `municipio_id` int DEFAULT NULL,
-  `localidad_id` int DEFAULT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `direccion` VARCHAR(255) DEFAULT NULL,
+  `tipo_id` INT DEFAULT NULL,
+  `municipio_id` INT DEFAULT NULL,
+  `localidad_id` INT DEFAULT NULL,
+  `actividad_id` INT DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `tipo_id` (`tipo_id`),
   KEY `municipio_id` (`municipio_id`),
   KEY `localidad_id` (`localidad_id`),
+  KEY `actividad_id` (`actividad_id`),
   CONSTRAINT `viviendas_ibfk_1` FOREIGN KEY (`tipo_id`) REFERENCES `tipos_vivienda` (`id`),
   CONSTRAINT `viviendas_ibfk_2` FOREIGN KEY (`municipio_id`) REFERENCES `municipios` (`id`),
-  CONSTRAINT `viviendas_ibfk_3` FOREIGN KEY (`localidad_id`) REFERENCES `localidades` (`id`)
+  CONSTRAINT `viviendas_ibfk_3` FOREIGN KEY (`localidad_id`) REFERENCES `localidades` (`id`),
+  CONSTRAINT `viviendas_ibfk_4` FOREIGN KEY (`actividad_id`) REFERENCES `actividades` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Dumping data for table `viviendas`

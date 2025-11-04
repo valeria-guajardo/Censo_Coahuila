@@ -6,18 +6,21 @@ import java.sql.DriverManager;
 public class ConexionBD {
     private static Connection conexion;
 
-    private ConexionBD() {
-        // Constructor privado para evitar instanciación externa
-    }
+    private ConexionBD() {}
 
     public static Connection getConexion() {
         if (conexion == null) {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 conexion = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/censo_coahuila", "root", "@Zelev2311");
+                        "jdbc:mysql://localhost:3307/censo_coahuila?allowPublicKeyRetrieval=true&useSSL=false",
+                        "root",
+                        "1234"
+                );
+                System.out.println("ConexiÃ³n establecida con la base de datos");
             } catch (Exception e) {
                 e.printStackTrace();
+                System.out.println("No se pudo conectar a la base de datos");
             }
         }
         return conexion;

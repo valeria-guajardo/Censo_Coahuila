@@ -6,6 +6,7 @@ import modelo.Sesion;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.util.List;
 
 public class FormularioMunicipio extends JFrame {
@@ -16,11 +17,13 @@ public class FormularioMunicipio extends JFrame {
     private int idSeleccionado = -1;
 
     public FormularioMunicipio() {
-        setTitle("Cat·logo: Municipios");
+        setTitle("Cat√°logo: Municipios");
         setSize(500, 400);
         setLayout(null);
         setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(245,245,250));
 
+        // Campo Nombre
         JLabel lblNombre = new JLabel("Nombre:");
         lblNombre.setBounds(20, 20, 80, 25);
         add(lblNombre);
@@ -29,52 +32,53 @@ public class FormularioMunicipio extends JFrame {
         txtNombre.setBounds(100, 20, 200, 25);
         add(txtNombre);
 
-        btnGuardar = new JButton("Guardar");
-        btnGuardar.setBounds(320, 20, 100, 25);
-        add(btnGuardar);
+        // Botones
+        btnGuardar = crearBoton("Guardar", 320, 20, new Color(70,130,180));
+        btnActualizar = crearBoton("Actualizar", 320, 60, new Color(255,165,0));
+        btnEliminar = crearBoton("Eliminar", 320, 100, new Color(220,53,69));
+        btnLimpiar = crearBoton("Limpiar", 320, 140, new Color(128,128,128));
 
-        btnActualizar = new JButton("Actualizar");
-        btnActualizar.setBounds(320, 60, 100, 25);
-        add(btnActualizar);
+        add(btnGuardar); add(btnActualizar); add(btnEliminar); add(btnLimpiar);
 
-        btnEliminar = new JButton("Eliminar");
-        btnEliminar.setBounds(320, 100, 100, 25);
-        add(btnEliminar);
-
-        btnLimpiar = new JButton("Limpiar");
-        btnLimpiar.setBounds(320, 140, 100, 25);
-        add(btnLimpiar);
-
+        // Tabla
         modelo = new DefaultTableModel(new String[]{"ID", "Nombre"}, 0);
         tabla = new JTable(modelo);
         JScrollPane scroll = new JScrollPane(tabla);
         scroll.setBounds(20, 180, 440, 150);
         add(scroll);
 
-        cargarTabla();
-        configurarEventos();
-
+        // Deshabilitar botones si no es admin
         if (!Sesion.rol.equals("admin")) {
             btnActualizar.setEnabled(false);
             btnEliminar.setEnabled(false);
         }
+
+        configurarEventos();
+
+        // Cargar datos en background
+        cargarTablaAsync();
     }
 
-    private void cargarTabla() {
-        MunicipioDAO dao = new MunicipioDAO();
-        List<Municipio> lista = dao.listar();
-        modelo.setRowCount(0);
-        for (Municipio m : lista) {
-            modelo.addRow(new Object[]{m.getId(), m.getNombre()});
-        }
+    private JButton crearBoton(String texto, int x, int y, Color color) {
+        JButton btn = new JButton(texto);
+        btn.setBounds(x, y, 100, 30);
+        btn.setBackground(color);
+        btn.setForeground(Color.WHITE);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        btn.setFocusPainted(false);
+        btn.setBorderPainted(false);
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        return btn;
     }
 
     private void configurarEventos() {
         btnGuardar.addActionListener(e -> {
             String nombre = txtNombre.getText().trim();
             if (!nombre.isEmpty()) {
-                new MunicipioDAO().insertar(new Municipio(0, nombre));
-                cargarTabla();
+                new Thread(() -> {
+                    new MunicipioDAO().insertar(new Municipio(0, nombre));
+                    cargarTablaAsync();
+                }).start();
                 limpiar();
             }
         });
@@ -83,11 +87,13 @@ public class FormularioMunicipio extends JFrame {
             if (idSeleccionado != -1) {
                 String nombre = txtNombre.getText().trim();
                 if (!nombre.isEmpty()) {
-                    new MunicipioDAO().actualizar(new Municipio(idSeleccionado, nombre));
-                    cargarTabla();
+                    new Thread(() -> {
+                        new MunicipioDAO().actualizar(new Municipio(idSeleccionado, nombre));
+                        cargarTablaAsync();
+                    }).start();
                     limpiar();
                 } else {
-                    JOptionPane.showMessageDialog(this, "El campo nombre no puede estar vacÌo.");
+                    JOptionPane.showMessageDialog(this, "El campo nombre no puede estar vac√≠o.");
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Selecciona un municipio para actualizar.");
@@ -96,10 +102,12 @@ public class FormularioMunicipio extends JFrame {
 
         btnEliminar.addActionListener(e -> {
             if (idSeleccionado != -1) {
-                int confirmacion = JOptionPane.showConfirmDialog(this, "øEst·s seguro de eliminar este municipio?", "Confirmar", JOptionPane.YES_NO_OPTION);
+                int confirmacion = JOptionPane.showConfirmDialog(this, "¬øEst√°s seguro de eliminar este municipio?", "Confirmar", JOptionPane.YES_NO_OPTION);
                 if (confirmacion == JOptionPane.YES_OPTION) {
-                    new MunicipioDAO().eliminar(idSeleccionado);
-                    cargarTabla();
+                    new Thread(() -> {
+                        new MunicipioDAO().eliminar(idSeleccionado);
+                        cargarTablaAsync();
+                    }).start();
                     limpiar();
                 }
             } else {
@@ -124,5 +132,27 @@ public class FormularioMunicipio extends JFrame {
         txtNombre.setText("");
         idSeleccionado = -1;
         tabla.clearSelection();
+    }
+
+    private void cargarTablaAsync() {
+        SwingWorker<List<Municipio>, Void> worker = new SwingWorker<>() {
+            @Override
+            protected List<Municipio> doInBackground() {
+                return new MunicipioDAO().listar();
+            }
+            @Override
+            protected void done() {
+                try {
+                    List<Municipio> lista = get();
+                    modelo.setRowCount(0);
+                    for (Municipio m : lista) {
+                        modelo.addRow(new Object[]{m.getId(), m.getNombre()});
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        worker.execute();
     }
 }

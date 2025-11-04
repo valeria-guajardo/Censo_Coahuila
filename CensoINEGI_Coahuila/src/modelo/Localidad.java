@@ -4,43 +4,42 @@ public class Localidad {
     private int id;
     private String nombre;
     private int municipioId;
-    
-    //Constructor
-	public Localidad(int id, String nombre, int municipioId) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.municipioId = municipioId;
-	}
 
-	// getters y setters
-	public int getId() {
-		return id;
-	}
+    // Constructor
+    public Localidad(int id, String nombre, int municipioId) {
+        this.id = id;
+        this.nombre = nombre;
+        this.municipioId = municipioId;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    // Getters y Setters
+    public int getId() {
+        return id;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public int getMunicipioId() {
-		return municipioId;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public void setMunicipioId(int municipioId) {
-		this.municipioId = municipioId;
-	}
+    public int getMunicipioId() {
+        return municipioId;
+    }
 
-	@Override
-	public String toString() {
-	    return nombre;
-	}
-    
+    public void setMunicipioId(int municipioId) {
+        this.municipioId = municipioId;
+    }
+
+    // Para que aparezca el nombre en los JComboBox
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/CensoINEGI_Coahuila/src/controlador/LoginControlador.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/CensoINEGI_Coahuila/src/dao/TestConexion.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/CensoINEGI_Coahuila/src/vista/FormularioActividadEconomica.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/CensoINEGI_Coahuila/src/vista/FormularioHabitante.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/CensoINEGI_Coahuila/src/vista/FormularioLocalidad.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/CensoINEGI_Coahuila/src/vista/FormularioTipoVivienda.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/CensoINEGI_Coahuila/src/vista/FormularioUsuarios.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/CensoINEGI_Coahuila/src/vista/FormularioVivienda.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/CensoINEGI_Coahuila/src/vista/InicioVista.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/CensoINEGI_Coahuila/src/vista/LoginVista.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/CensoINEGI_Coahuila/src/vista/MenuPrincipal.java" charset="ISO-8859-1" />
+  </component>
+</project>

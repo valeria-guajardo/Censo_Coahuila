@@ -33,7 +33,8 @@ public class ViviendaDAO {
                     rs.getString("direccion"),
                     rs.getInt("tipo_id"),
                     rs.getInt("municipio_id"),
-                    rs.getInt("localidad_id")
+                    rs.getInt("localidad_id"),
+                    rs.getInt("actividad_id")
                 );
                 lista.add(v);
             }

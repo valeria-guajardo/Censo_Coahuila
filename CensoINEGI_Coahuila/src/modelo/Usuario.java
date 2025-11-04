@@ -6,6 +6,9 @@ public class Usuario {
     private String password;
     private String nombre;
     private String apellidos;
+    private String rol;
+
+
 
     public Usuario(int id, String usuario, String password, String nombre, String apellidos) {
         this.id = id;
@@ -55,6 +58,8 @@ public class Usuario {
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
     }
+    public String getRol() { return rol; }
+    public void setRol(String rol) { this.rol = rol; }
 
     @Override
     public String toString() {
