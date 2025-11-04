@@ -1,4 +1,5 @@
-import vista.LoginVista;
+
+import vista.InicioVista;
 
 public class main {
     public static void main(String[] args) {
@@ -6,9 +7,9 @@ public class main {
 
         // Ejecutar el GUI en el hilo de eventos de Swing
         javax.swing.SwingUtilities.invokeLater(() -> {
-            LoginVista login = new LoginVista();
-            login.setVisible(true);
-            System.out.println("🔹 LoginVista abierta correctamente");
+            InicioVista inicio = new InicioVista();
+            inicio.setVisible(true);
+            System.out.println("Inicio abierto correctamente");
         });
     }
 }
